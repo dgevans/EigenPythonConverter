@@ -31,13 +31,6 @@ VectorXd estimate(const Map<rMatrixXd> &X, const Map<VectorXd> &y)
     return (X.transpose()*X).ldlt().solve(X.transpose()*y);
 }
 
-VectorXd estimate2(PyObject * pyX, PyObject *pyy)
-{
-    Map<rMatrixXd> X((double*)PyArray_DATA(pyX),10000,4);
-    Map<VectorXd> y((double*)PyArray_DATA(pyy),10000);
-    return (X.transpose()*X).ldlt().solve(X.transpose()*y);
-}
-
 BOOST_PYTHON_MODULE(test_cpp)
 {
     Register<MatrixXd>();
@@ -51,5 +44,4 @@ BOOST_PYTHON_MODULE(test_cpp)
     def("test",test);
     def("testRowMajor",testRowMajor);
     def("estimate",estimate);
-    def("estimate2",estimate2);
 }
